@@ -36,7 +36,9 @@
   :author "Jason Sankey"}
   test2junit.junit
   (:require [clojure.stacktrace :as stack]
-            [clojure.test :as t]))
+            [clojure.test :as t])
+  (:import (java.text SimpleDateFormat)
+           (java.util Date)))
 
 (def testsuite-temp-string (ref ""))
 (def testsuite-start-time (ref 0.0))
@@ -108,7 +110,8 @@
                :errors (str (:error @t/*report-counters*))
                :failures (str (:fail @t/*report-counters*))
                :tests (str (:test @t/*report-counters*))
-               :time (format "%.4f" (/ (- (System/nanoTime) @testsuite-start-time) 1000000000.0))}]
+               :time (format "%.4f" (/ (- (System/nanoTime) @testsuite-start-time) 1000000000.0))
+               :timestamp (-> (SimpleDateFormat. "yyyy-MM-dd_HH:mm:ssZ") (.format (Date.))) }]
     attrs))
 
 (defn start-suite

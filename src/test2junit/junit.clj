@@ -151,9 +151,9 @@
 
 (defmethod junit-report :end-test-ns [m]
   (t/with-test-out
-    (print (start-suite (name (ns-name (:ns m)))))
+    (start-suite (name (ns-name (:ns m))))
     (print @testsuite-temp-string)
-    (print (finish-suite))))
+    (finish-suite)))
 
 (defmethod junit-report :begin-test-var [m]
   (dosync (alter testsuite-temp-string str

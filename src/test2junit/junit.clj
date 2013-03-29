@@ -41,6 +41,7 @@
 (def testsuite-temp-string (ref ""))
 (def testsuite-start-time (ref 0.0))
 (def testcase-start-time (ref 0.0))
+(def result-temp-string (ref ""))
 
 ;; copied from clojure.contrib.lazy-xml
 (def ^{:private true}
@@ -163,6 +164,7 @@
     (finish-suite)))
 
 (defmethod junit-report :begin-test-var [m]
+  (dosync (ref-set result-temp-string ""))
   (dosync (ref-set testcase-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-var [m]
@@ -171,13 +173,14 @@
       (let [var (:var m)]
         (binding [*var-context* (conj *var-context* var)]
           (start-case (test-name *var-context*) (name (ns-name (:ns (meta var)))))))
+      (print @result-temp-string)
       (finish-case)))))
 
 (defmethod junit-report :pass [m]
   (t/inc-report-counter :pass))
 
 (defmethod junit-report :fail [m]
-  (dosync (alter testsuite-temp-string str
+  (dosync (alter result-temp-string str
     (with-out-str
       (t/inc-report-counter :fail)
       (failure-el (:message m)
@@ -185,7 +188,7 @@
                   (:actual m))))))
 
 (defmethod junit-report :error [m]
-  (dosync (alter testsuite-temp-string str
+  (dosync (alter result-temp-string str
     (with-out-str
       (t/inc-report-counter :error)
       (error-el (:message m)

@@ -38,6 +38,8 @@
   (:require [clojure.stacktrace :as stack]
             [clojure.test :as t]))
 
+(def testsuite-temp-string (ref ""))
+
 ;; copied from clojure.contrib.lazy-xml
 (def ^{:private true}
      escape-xml-map
@@ -88,7 +90,9 @@
 
 (defn start-case
   [name classname]
-  (start-element 'testcase true {:name name :classname classname}))
+  (start-element 'testcase true 
+                 {:name name 
+                  :classname classname}))
 
 (defn finish-case
   []
@@ -96,10 +100,11 @@
 
 (defn suite-attrs
   [package classname]
-  (let [attrs {:name classname}]
-    (if package
-      (assoc attrs :package package)
-      attrs)))
+  (let [attrs {:name (str package "." classname)
+               :errors (str (:error @t/*report-counters*))
+               :failures (str (:fail @t/*report-counters*))
+               :tests (str (:test @t/*report-counters*))}]
+    attrs))
 
 (defn start-suite
   [name]
@@ -142,40 +147,44 @@
 (defmulti ^:dynamic junit-report :type)
 
 (defmethod junit-report :begin-test-ns [m]
-  (t/with-test-out
-   (start-suite (name (ns-name (:ns m))))))
+  (dosync (ref-set testsuite-temp-string "")))
 
-(defmethod junit-report :end-test-ns [_]
+(defmethod junit-report :end-test-ns [m]
   (t/with-test-out
-   (finish-suite)))
+    (print (start-suite (name (ns-name (:ns m)))))
+    (print @testsuite-temp-string)
+    (print (finish-suite))))
 
 (defmethod junit-report :begin-test-var [m]
-  (t/with-test-out
-   (let [var (:var m)]
-     (binding [*var-context* (conj *var-context* var)]
-       (start-case (test-name *var-context*) (name (ns-name (:ns (meta var)))))))))
+  (dosync (alter testsuite-temp-string str
+    (with-out-str
+      (let [var (:var m)]
+        (binding [*var-context* (conj *var-context* var)]
+          (start-case (test-name *var-context*) (name (ns-name (:ns (meta var)))))))))))
 
 (defmethod junit-report :end-test-var [m]
-  (t/with-test-out
-   (finish-case)))
+  (dosync (alter testsuite-temp-string str
+    (with-out-str
+      (finish-case)))))
 
 (defmethod junit-report :pass [m]
-  (t/with-test-out
-   (t/inc-report-counter :pass)))
+  (t/inc-report-counter :pass))
 
 (defmethod junit-report :fail [m]
-  (t/with-test-out
-   (t/inc-report-counter :fail)
-   (failure-el (:message m)
-               (:expected m)
-               (:actual m))))
+  (dosync (alter testsuite-temp-string str
+    (with-out-str
+      (t/inc-report-counter :fail)
+      (failure-el (:message m)
+                  (:expected m)
+                  (:actual m))))))
 
 (defmethod junit-report :error [m]
-  (t/with-test-out
-   (t/inc-report-counter :error)
-   (error-el (:message m)
-             (:expected m)
-             (:actual m))))
+  (dosync (alter testsuite-temp-string str
+    (with-out-str
+      (t/inc-report-counter :error)
+      (error-el (:message m)
+                (:expected m)
+                (:actual m))))))
 
 (defmethod junit-report :default [_])
 

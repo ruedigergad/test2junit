@@ -96,7 +96,7 @@
   (start-element 'testcase true 
                  {:name name 
                   :classname classname
-                  :time (str (/ (- (System/nanoTime) @testcase-start-time) 1000000000.0))}))
+                  :time (format "%.4f" (/ (- (System/nanoTime) @testcase-start-time) 1000000000.0))}))
 
 (defn finish-case
   []
@@ -108,7 +108,7 @@
                :errors (str (:error @t/*report-counters*))
                :failures (str (:fail @t/*report-counters*))
                :tests (str (:test @t/*report-counters*))
-               :time (str (/ (- (System/nanoTime) @testsuite-start-time) 1000000000.0))}]
+               :time (format "%.4f" (/ (- (System/nanoTime) @testsuite-start-time) 1000000000.0))}]
     attrs))
 
 (defn start-suite

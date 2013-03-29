@@ -147,9 +147,11 @@
 (defmulti ^:dynamic junit-report :type)
 
 (defmethod junit-report :begin-test-ns [m]
+  (set! *depth* (inc *depth*))
   (dosync (ref-set testsuite-temp-string "")))
 
 (defmethod junit-report :end-test-ns [m]
+  (set! *depth* (dec *depth*))
   (t/with-test-out
     (start-suite (name (ns-name (:ns m))))
     (print @testsuite-temp-string)

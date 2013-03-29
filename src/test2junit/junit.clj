@@ -39,6 +39,8 @@
             [clojure.test :as t]))
 
 (def testsuite-temp-string (ref ""))
+(def testsuite-start-time (ref 0.0))
+(def testcase-start-time (ref 0.0))
 
 ;; copied from clojure.contrib.lazy-xml
 (def ^{:private true}
@@ -92,7 +94,8 @@
   [name classname]
   (start-element 'testcase true 
                  {:name name 
-                  :classname classname}))
+                  :classname classname
+                  :time (str (/ (- (System/nanoTime) @testcase-start-time) 1000000000.0))}))
 
 (defn finish-case
   []
@@ -103,7 +106,8 @@
   (let [attrs {:name (str package "." classname)
                :errors (str (:error @t/*report-counters*))
                :failures (str (:fail @t/*report-counters*))
-               :tests (str (:test @t/*report-counters*))}]
+               :tests (str (:test @t/*report-counters*))
+               :time (str (/ (- (System/nanoTime) @testsuite-start-time) 1000000000.0))}]
     attrs))
 
 (defn start-suite
@@ -148,7 +152,8 @@
 
 (defmethod junit-report :begin-test-ns [m]
   (set! *depth* (inc *depth*))
-  (dosync (ref-set testsuite-temp-string "")))
+  (dosync (ref-set testsuite-temp-string ""))
+  (dosync (ref-set testsuite-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-ns [m]
   (set! *depth* (dec *depth*))
@@ -158,15 +163,14 @@
     (finish-suite)))
 
 (defmethod junit-report :begin-test-var [m]
-  (dosync (alter testsuite-temp-string str
-    (with-out-str
-      (let [var (:var m)]
-        (binding [*var-context* (conj *var-context* var)]
-          (start-case (test-name *var-context*) (name (ns-name (:ns (meta var)))))))))))
+  (dosync (ref-set testcase-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-var [m]
   (dosync (alter testsuite-temp-string str
     (with-out-str
+      (let [var (:var m)]
+        (binding [*var-context* (conj *var-context* var)]
+          (start-case (test-name *var-context*) (name (ns-name (:ns (meta var)))))))
       (finish-case)))))
 
 (defmethod junit-report :pass [m]

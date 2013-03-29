@@ -1,8 +1,8 @@
 (ns test2junit.core
   (:require clj-assorted-utils.util
             clojure.java.io
-            clojure.test.junit
-            robert.hooke))
+            robert.hooke
+            test2junit.junit))
 
 (defn apply-junit-output-hook []
   (robert.hooke/add-hook 
@@ -14,6 +14,6 @@
         (println "Testing:" ns#)
         (with-open [wrtr# (clojure.java.io/writer (str "test2junit/xml/" ns# ".xml"))]
           (binding [clojure.test/*test-out* wrtr#]
-            (clojure.test.junit/with-junit-output
+            (test2junit.junit/with-junit-output
               (apply f# args#))))))))
 

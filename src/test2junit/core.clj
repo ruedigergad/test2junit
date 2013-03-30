@@ -17,8 +17,11 @@
 </project>")
 
 (defn apply-junit-output-hook [output-dir]
-  (println "Writing output to:" output-dir "\n")
-  (spit "build.xml" (clojure.string/replace default-ant-build-file-content "test2junit-dir" output-dir))
+  (println "Writing output to:" output-dir)
+  (when (not (clj-assorted-utils.util/file-exists? "build.xml"))
+    (println "Creating default build.xml file.")
+    (spit "build.xml" (clojure.string/replace default-ant-build-file-content "test2junit-dir" output-dir)))
+  (println "")
   (robert.hooke/add-hook 
     #'clojure.test/test-ns
     (fn [f# & args#]

@@ -9,6 +9,8 @@
     #'clojure.test/test-ns
     (fn [f# & args#]
       (clj-assorted-utils.util/mkdir "test2junit")
+      (clj-assorted-utils.util/mkdir "test2junit/html")
+      (clj-assorted-utils.util/mkdir "test2junit/tmp")
       (clj-assorted-utils.util/mkdir "test2junit/xml")
       (let [ns# (first args#)]
         (println "Testing:" ns#)

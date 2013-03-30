@@ -16,6 +16,11 @@
     </target>
 </project>")
 
+(defn get-output-dir [project]
+  (if (nil? (:test2junit-output-dir project))
+    "test2junit"
+    (:test2junit-output-dir project)))
+
 (defn apply-junit-output-hook [output-dir]
   (println "Writing output to:" output-dir)
   (when (not (clj-assorted-utils.util/file-exists? "build.xml"))

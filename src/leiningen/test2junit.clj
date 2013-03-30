@@ -1,7 +1,10 @@
 (ns leiningen.test2junit
   "Output test results to JUnit XML format."
-  (:require [leiningen.test]
-            [robert.hooke]))
+  (:require [clj-assorted-utils.util]
+            [leiningen.core.main]
+            [leiningen.test]
+            [robert.hooke]
+            [test2junit.core]))
 
 (defn add-test-var-println [f & args]
   (println "Running Tests...")
@@ -16,5 +19,18 @@
   [project & keys]
   (robert.hooke/add-hook #'leiningen.test/form-for-testing-namespaces
                          add-test-var-println)
-  (apply leiningen.test/test project keys))
+  (binding [leiningen.core.main/*exit-process?* false]
+    (try
+      (apply leiningen.test/test project keys))
+      (catch clojure.lang.ExceptionInfo e
+        (let [msg (.getMessage e)]
+          (if (not (= msg "Suppressed exit"))
+            (println "Caught exception:" e)))))
+  (when (and (not (nil? (:test2junit-run-ant project)))
+             (:test2junit-run-ant project))
+    (print "\nRunning ant to generate HTML report...")
+    (let [ret (.waitFor (clj-assorted-utils.util/exec-with-out "ant" println))]
+      (if (= 0 ret)
+        (println "Report was successfully generated.")
+        (println "There was a problem during report generation. Ant returned with:" ret)))))
 

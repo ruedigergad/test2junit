@@ -1,11 +1,24 @@
 (ns test2junit.core
   (:require clj-assorted-utils.util
             clojure.java.io
+            [clojure.string :only (replace)]
             robert.hooke
             test2junit.junit))
 
+(def default-ant-build-file-content
+  "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
+<project basedir=\".\" default=\"create_html_report\" name=\"test2junit-html-report-generator\">
+    <target name=\"create_html_report\">
+        <junitreport todir=\"test2junit-dir/tmp\">
+            <fileset dir=\"test2junit-dir/xml\" />
+            <report todir=\"test2junit-dir/html\" />
+        </junitreport>
+    </target>
+</project>")
+
 (defn apply-junit-output-hook [output-dir]
   (println "Writing output to:" output-dir "\n")
+  (spit "build.xml" (clojure.string/replace default-ant-build-file-content "test2junit-dir" output-dir))
   (robert.hooke/add-hook 
     #'clojure.test/test-ns
     (fn [f# & args#]

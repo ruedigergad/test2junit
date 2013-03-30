@@ -1,3 +1,15 @@
+; This file had originally been taken from:
+; https://github.com/clojure/clojure/blob/clojure-1.5.1/src/clj/clojure/test/junit.clj
+; It was modified such that the emitted XML can be used with junitreport for
+; generating reports in HTML format.
+; Additionally, functionality was added to output summaries about the number of
+; tests, failed test, errors, and the duration of tests.
+; The modifications are released under the EPL 1.0, which is the same license 
+; as the original code.
+; The author of the modifications is: Ruediger Gad <r.c.g@gmx.de>
+; The original copyright etc. is written below.
+;
+;
 ;   Copyright (c) Rich Hickey. All rights reserved.
 ;   The use and distribution terms for this software are covered by the
 ;   Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)

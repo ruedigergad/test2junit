@@ -31,7 +31,7 @@
       (clj-assorted-utils.util/mkdir (str output-dir "/xml"))
       (let [ns# (first args#)]
         (println "Testing:" ns#)
-        (with-open [wrtr# (clojure.java.io/writer (str "test2junit/xml/" ns# ".xml"))]
+        (with-open [wrtr# (clojure.java.io/writer (str output-dir "/xml/" ns# ".xml"))]
           (binding [clojure.test/*test-out* wrtr#]
             (test2junit.junit/with-junit-output
               (apply f# args#))))))))

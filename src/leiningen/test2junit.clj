@@ -28,7 +28,7 @@
             (println "Caught exception:" e)))))
   (when (and (not (nil? (:test2junit-run-ant project)))
              (:test2junit-run-ant project))
-    (print "\nRunning ant to generate HTML report...")
+    (println "\nRunning ant to generate HTML report...")
     (let [ret (.waitFor (clj-assorted-utils.util/exec-with-out "ant" println))]
       (if (= 0 ret)
         (println "Report was successfully generated.")

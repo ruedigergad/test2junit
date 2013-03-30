@@ -15,7 +15,12 @@
   
    This plug-in writes test results to files in JUnit XML format.
    These files can be used, e.g., with junitreport for creating reports in HTML format.
-   Please see the webpage for more information: https://github.com/ruedigergad/test2junit"
+   Please see the webpage for more information: https://github.com/ruedigergad/test2junit
+  
+   You can tweak some setting via your project.clj file:
+   The directory to which the results are written can be set with :test2junit-output-dir
+   To run Ant automatically set :test2junit-run-ant to true.
+  "
   [project & keys]
   (robert.hooke/add-hook #'leiningen.test/form-for-testing-namespaces
                          add-test-var-println)

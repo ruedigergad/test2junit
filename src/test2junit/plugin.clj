@@ -8,6 +8,6 @@
                          (test2junit.core/apply-junit-output-hook ~output-dir)])]
     (update-in prjct [:dependencies] concat
                [['robert/hooke "1.3.0"]
-                ['clj-assorted-utils "1.2.2"]
+                ['clj-assorted-utils "1.2.4"]
                 ['test2junit "0.1.0-SNAPSHOT"]])))
 

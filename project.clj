@@ -6,7 +6,8 @@
 ;;;   http://opensource.org/licenses/eclipse-1.0.php
 ;;;
 
-(defproject test2junit "0.1.0-SNAPSHOT"
+(defproject test2junit "1.0.0"
+;(defproject test2junit "1.1.0-SNAPSHOT"
   :description "Leiningen plug-in for emitting test output in JUnit XML format"
   :url "https://github.com/ruedigergad/test2junit"
   :license {:name "Eclipse Public License"

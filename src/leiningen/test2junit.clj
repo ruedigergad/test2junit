@@ -10,6 +10,7 @@
   "Output test results to JUnit XML format."
   (:require [clj-assorted-utils.util]
             [leiningen.core.main]
+            [leiningen.core.project]
             [leiningen.test]
             [robert.hooke]
             [test2junit.core]))
@@ -32,13 +33,19 @@
   [project & keys]
   (robert.hooke/add-hook #'leiningen.test/form-for-testing-namespaces
                          add-test-var-println)
-  (binding [leiningen.core.main/*exit-process?* false]
-    (try
-      (apply leiningen.test/test project keys))
-      (catch clojure.lang.ExceptionInfo e
-        (let [msg (.getMessage e)]
-          (if (not (= msg "Suppressed exit"))
-            (println "Caught exception:" e)))))
+  (let [output-dir (test2junit.core/get-output-dir project)
+        test2junit-profile [{:injections `[(require 'test2junit.core) 
+                                           (test2junit.core/apply-junit-output-hook ~output-dir)]
+                             :dependencies [['robert/hooke "1.3.0"]
+                                            ['clj-assorted-utils "1.2.4"]
+                                            ['test2junit "0.1.0-SNAPSHOT"]]}]]
+    (binding [leiningen.core.main/*exit-process?* false]
+      (try
+        (apply leiningen.test/test (leiningen.core.project/merge-profiles project test2junit-profile) keys))
+        (catch clojure.lang.ExceptionInfo e
+          (let [msg (.getMessage e)]
+            (if (not (= msg "Suppressed exit"))
+              (println "Caught exception:" e))))))
   (when (and (not (nil? (:test2junit-run-ant project)))
              (:test2junit-run-ant project))
     (println "\nRunning ant to generate HTML report...")

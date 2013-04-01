@@ -1,5 +1,5 @@
 ;;;
-;;;   Copyright 2013, Ruediger Gad
+;;;   Copyright 2013, Ruediger Gad <r.c.g@gmx.de>
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 

@@ -1,8 +1,8 @@
 ;;;
 ;;;   Copyright 2013, Ruediger Gad <r.c.g@gmx.de>
 ;;;
-;;;   This software is released under the terms of the Eclipse Public License 
-;;;   (EPL) 1.0. You can find a copy of the EPL at: 
+;;;   This software is released under the terms of the Eclipse Public License
+;;;   (EPL) 1.0. You can find a copy of the EPL at:
 ;;;   http://opensource.org/licenses/eclipse-1.0.php
 ;;;
 
@@ -46,7 +46,7 @@
   (let [output-dir (test2junit.core/get-output-dir project)
         test2junit-version ((first (filter #(= (first %) 'test2junit/test2junit) (:plugins project))) 1)
         _ (println "Using test2junit version:" test2junit-version)
-        test2junit-profile [{:injections `[(require 'test2junit.core) 
+        test2junit-profile [{:injections `[(require 'test2junit.core)
                                            (test2junit.core/apply-junit-output-hook ~output-dir)]
                              :dependencies [['robert/hooke "1.3.0"]
                                             ['clj-assorted-utils "1.2.4"]

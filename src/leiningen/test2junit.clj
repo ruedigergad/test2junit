@@ -19,13 +19,23 @@
   (println "Running Tests...")
   (apply f args))
 
+(defn- generate-html
+  [project]
+  (when (and (not (nil? (:test2junit-run-ant project)))
+             (:test2junit-run-ant project))
+    (println "\nRunning ant to generate HTML report...")
+    (let [ret (.waitFor (clj-assorted-utils.util/exec-with-out "ant" println))]
+      (if (= 0 ret)
+        (println "Report was successfully generated.")
+        (println "There was a problem during report generation. Ant returned with:" ret)))))
+
 (defn test2junit
   "Output test results to JUnit XML format.
-  
+
    This plug-in writes test results to files in JUnit XML format.
    These files can be used, e.g., with junitreport for creating reports in HTML format.
    Please see the webpage for more information: https://github.com/ruedigergad/test2junit
-  
+
    You can tweak some setting via your project.clj file:
    The directory to which the results are written can be set with :test2junit-output-dir
    To run Ant automatically set :test2junit-run-ant to true.
@@ -47,11 +57,4 @@
         (catch clojure.lang.ExceptionInfo e
           (if-not (:exit-code (ex-data e))
             (println "Caught exception:" e)))))
-  (when (and (not (nil? (:test2junit-run-ant project)))
-             (:test2junit-run-ant project))
-    (println "\nRunning ant to generate HTML report...")
-    (let [ret (.waitFor (clj-assorted-utils.util/exec-with-out "ant" println))]
-      (if (= 0 ret)
-        (println "Report was successfully generated.")
-        (println "There was a problem during report generation. Ant returned with:" ret)))))
-
+  (generate-html project))

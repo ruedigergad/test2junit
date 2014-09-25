@@ -45,9 +45,8 @@
       (try
         (apply leiningen.test/test (leiningen.core.project/merge-profiles project test2junit-profile) keys))
         (catch clojure.lang.ExceptionInfo e
-          (let [msg (.getMessage e)]
-            (if (not (= msg "Suppressed exit"))
-              (println "Caught exception:" e))))))
+          (if-not (:exit-code (ex-data e))
+            (println "Caught exception:" e)))))
   (when (and (not (nil? (:test2junit-run-ant project)))
              (:test2junit-run-ant project))
     (println "\nRunning ant to generate HTML report...")

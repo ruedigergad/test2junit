@@ -54,7 +54,9 @@
     (binding [leiningen.core.main/*exit-process?* false]
       (try
         (apply leiningen.test/test (leiningen.core.project/merge-profiles project test2junit-profile) keys))
-        (catch clojure.lang.ExceptionInfo e
-          (if-not (:exit-code (ex-data e))
-            (println "Caught exception:" e)))))
+      (catch clojure.lang.ExceptionInfo e
+        (if (:exit-code (ex-data e))
+          (do (generate-html project)
+              (throw e))
+          (println "Caught exception:" e)))))
   (generate-html project))

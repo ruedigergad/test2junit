@@ -21,8 +21,7 @@
 
 (defn- generate-html
   [project]
-  (when (and (not (nil? (:test2junit-run-ant project)))
-             (:test2junit-run-ant project))
+  (when (:test2junit-run-ant project)
     (println "\nRunning ant to generate HTML report...")
     (let [ret (.waitFor (clj-assorted-utils.util/exec-with-out "ant" println))]
       (if (= 0 ret)

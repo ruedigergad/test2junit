@@ -52,10 +52,10 @@
                                             ['test2junit test2junit-version]]}]]
     (binding [leiningen.core.main/*exit-process?* false]
       (try
-        (apply leiningen.test/test (leiningen.core.project/merge-profiles project test2junit-profile) keys))
-      (catch clojure.lang.ExceptionInfo e
-        (if (:exit-code (ex-data e))
-          (do (generate-html project)
-              (throw e))
-          (println "Caught exception:" e)))))
+        (apply leiningen.test/test (leiningen.core.project/merge-profiles project test2junit-profile) keys)
+        (catch clojure.lang.ExceptionInfo e
+          (if (:exit-code (ex-data e))
+            (do (generate-html project)
+                (throw e))
+            (println "Caught exception:" e))))))
   (generate-html project))

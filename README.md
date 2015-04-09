@@ -21,6 +21,7 @@ To use this plug-in simply add [test2junit "1.1.0"] either to your .lein/profile
 ## Usage Example
 
 Below is an example for globally adding test2junit via the ~/.lein/profiles.clj    file:
+
     {:user {:plugins [
                        [test2junit "1.1.0"]
                      ]}}

@@ -18,6 +18,16 @@ http://ruedigergad.github.com/clj-assorted-utils/test-results/html/
 To use this plug-in simply add [test2junit "1.1.0"] either to your .lein/profile.clj or as development dependency to an individual project. test2junit requires Leiningen 2.x.
 
 
+## Usage Example
+
+Below is an example for globally adding test2junit via the ~/.lein/profiles.clj file:
+ {:user {:plugins [
+                    [test2junit "1.1.0"]
+                  ]}}
+
+An example for the project specific setting can be found in:
+https://github.com/ruedigergad/clj-assorted-utils/blob/master/project.clj
+
 ## License
 
 Copyright © 2013 Ruediger Gad, et al. (See src/test2junit/junit.clj).

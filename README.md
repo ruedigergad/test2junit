@@ -25,8 +25,8 @@ Below is an example for globally adding test2junit via the ~/.lein/profiles.clj 
     {:user {:plugins [[test2junit "1.1.0"]]}}
 
 Or you can just add it to your development profile like so:
-    :profiles {:dev {:plugins [[test2junit "1.1.0"]]}}
 
+    :profiles {:dev {:plugins [[test2junit "1.1.0"]]}}
 
 An example for the project specific setting can be found in:
 https://github.com/ruedigergad/clj-assorted-utils/blob/master/project.clj

@@ -36,7 +36,7 @@ https://github.com/ruedigergad/clj-assorted-utils/blob/master/project.clj
 
 This will enable you to use the plugin from your terminal:
     
-    $ lein test2unit
+    $ lein test2junit
 
 ## License
 

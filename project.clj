@@ -14,5 +14,5 @@
   :eval-in-leiningen true
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [clj-assorted-utils "1.11.0"]]
-  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}} 
+  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}}
 )

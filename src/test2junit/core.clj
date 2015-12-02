@@ -9,7 +9,7 @@
 (ns test2junit.core
   (:require clj-assorted-utils.util
             clojure.java.io
-            [clojure.string :only (replace)]
+            [clojure.string :as strng]
             robert.hooke
             test2junit.junit))
 
@@ -33,7 +33,7 @@
   (println "Writing output to:" output-dir)
   (when (not (clj-assorted-utils.util/file-exists? "build.xml"))
     (println "Creating default build.xml file.")
-    (spit "build.xml" (clojure.string/replace default-ant-build-file-content "test2junit-dir" output-dir)))
+    (spit "build.xml" (strng/replace default-ant-build-file-content "test2junit-dir" output-dir)))
   (println "")
   (robert.hooke/add-hook 
     #'clojure.test/test-ns

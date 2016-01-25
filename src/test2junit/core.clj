@@ -25,9 +25,11 @@
 </project>")
 
 (defn get-output-dir [project]
-  (if (nil? (:test2junit-output-dir project))
-    "test2junit"
-    (:test2junit-output-dir project)))
+  (or
+    (System/getenv "TEST2JUNIT_OUTPUT_DIR")
+    (System/getProperty "test2junit.output.dir")
+    (:test2junit-output-dir project)
+    "test2junit"))
 
 (defn apply-junit-output-hook [output-dir]
   (println "Writing output to:" output-dir)

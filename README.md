@@ -27,11 +27,11 @@ _test2junit_ requires _Leiningen 2.x_.
 
 Below is an example for globally adding test2junit via the ~/.lein/profiles.clj    file:
 
-    {:user {:plugins [[test2junit "1.2.1"]]}}
+    {:user {:plugins [[test2junit "1.2.2"]]}}
 
 Or you can just add it to your development profile like so:
 
-    :profiles {:dev {:plugins [[test2junit "1.2.1"]]}}
+    :profiles {:dev {:plugins [[test2junit "1.2.2"]]}}
 
 An example for the project specific setting can be found in:
 https://github.com/ruedigergad/clj-assorted-utils/blob/master/project.clj

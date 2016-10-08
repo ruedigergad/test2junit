@@ -48,7 +48,7 @@
         test2junit-profile [{:injections `[(require 'test2junit.core)
                                            (test2junit.core/apply-junit-output-hook ~output-dir)]
                              :dependencies [['robert/hooke "1.3.0"]
-                                            ['clj-assorted-utils "1.14.0"]
+                                            ['clj-assorted-utils "1.15.0"]
                                             ['test2junit test2junit-version]]}]]
     (binding [leiningen.core.main/*exit-process?* false]
       (try

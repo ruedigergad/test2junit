@@ -13,6 +13,6 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :eval-in-leiningen true
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [clj-assorted-utils "1.15.0"]]
-  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}}
+                 [clj-assorted-utils "1.17.1"]]
+  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.3" :exclusions  [org.clojure/clojure]]]}}
 )

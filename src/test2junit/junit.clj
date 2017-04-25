@@ -140,7 +140,7 @@
   (indent)
   (start-element tag false (if message {:message message} {}))
   (element-content
-   (let [[file line] (t/file-position 5)
+   (let [[file line] (t/file-position 15)
          detail (apply str (interpose
                             "\n"
                             [(str "expected: " expected-str)

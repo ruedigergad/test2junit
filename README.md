@@ -42,6 +42,6 @@ This will enable you to use the plugin from your terminal:
 
 ## License
 
-Copyright © 2013 Ruediger Gad, et al. (See src/test2junit/junit.clj).
+Copyright © 2013-2017 Ruediger Gad, et al. (See src/test2junit/junit.clj).
 
 Distributed under the Eclipse Public License, the same as Clojure.

@@ -195,20 +195,22 @@
   (t/inc-report-counter :pass))
 
 (defmethod junit-report :fail [m]
-  (dosync (alter result-temp-string str
-    (with-out-str
-      (t/inc-report-counter :fail)
-      (failure-el (:message m)
-                  (:expected m)
-                  (:actual m))))))
+  (do
+    (t/inc-report-counter :fail)
+    (dosync (alter result-temp-string str
+      (with-out-str
+        (failure-el (:message m)
+                    (:expected m)
+                    (:actual m)))))))
 
 (defmethod junit-report :error [m]
-  (dosync (alter result-temp-string str
-    (with-out-str
-      (t/inc-report-counter :error)
-      (error-el (:message m)
-                (:expected m)
-                (:actual m))))))
+  (do
+    (t/inc-report-counter :error)
+    (dosync (alter result-temp-string str
+      (with-out-str
+        (error-el (:message m)
+                  (:expected m)
+                  (:actual m)))))))
 
 (defmethod junit-report :default [_])
 

@@ -1,12 +1,12 @@
 ;;;
-;;;   Copyright 2013, Ruediger Gad <r.c.g@gmx.de>
+;;;   Copyright 2013-2017, Ruediger Gad <r.c.g@gmx.de>
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 
 ;;;   http://opensource.org/licenses/eclipse-1.0.php
 ;;;
 
-(defproject test2junit "1.2.6"
+(defproject test2junit "1.2.7"
   :description "Leiningen plug-in for emitting test output in JUnit XML format"
   :url "https://github.com/ruedigergad/test2junit"
   :license {:name "Eclipse Public License"

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="1" failures="1" id="0" name="tests" package="test2junit" tests="3" time="0.0207" timestamp="2017-04-27_18:55:00+0200">
-        <testcase classname="test2junit.tests" name="erroneous-test" time="0.0156">
-          <error message="In file tests.clj at line 28:">expected: (= foo (/ 1 0))
+  <testsuite errors="1" failures="1" id="0" name="example-tests" package="test2junit" tests="3" time="0.0210" timestamp="2017-04-27_19:03:28+0200">
+        <testcase classname="test2junit.example-tests" name="erroneous-test" time="0.0159">
+          <error message="In file example_tests.clj at line 28:">expected: (= foo (/ 1 0))
   actual: java.lang.ArithmeticException: Divide by zero
  at clojure.lang.Numbers.divide (Numbers.java:158)
     clojure.lang.Numbers.divide (Numbers.java:3808)
-    test2junit.tests$fn__1047.invokeStatic (tests.clj:29)
-    test2junit.tests/fn (tests.clj:26)
+    test2junit.example_tests$fn__1047.invokeStatic (example_tests.clj:29)
+    test2junit.example_tests/fn (example_tests.clj:26)
     clojure.test$test_var$fn__7983.invoke (test.clj:716)
     clojure.test$test_var.invokeStatic (test.clj:716)
     clojure.test$test_var.invoke (test.clj:707)
@@ -127,17 +127,17 @@
     clojure.lang.Var.applyTo (Var.java:700)
     clojure.main.main (main.java:37)
 
-      at: tests.clj:28</error>
+      at: example_tests.clj:28</error>
 
         </testcase>
 
-        <testcase classname="test2junit.tests" name="passing-test" time="0.0003">
+        <testcase classname="test2junit.example-tests" name="passing-test" time="0.0003">
     </testcase>
 
-        <testcase classname="test2junit.tests" name="failing-test" time="0.0017">
-          <failure message="In file tests.clj at line 18:">expected: (= foo 0)
+        <testcase classname="test2junit.example-tests" name="failing-test" time="0.0017">
+          <failure message="In file example_tests.clj at line 18:">expected: (= foo 0)
   actual: (not (= 1 0))
-      at: tests.clj:18</failure>
+      at: example_tests.clj:18</failure>
 
         </testcase>
 

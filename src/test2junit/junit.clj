@@ -146,18 +146,28 @@
                             [(str "expected: " expected-str)
                              (str "  actual: " actual-str)
                              (str "      at: " file ":" line)]))]
-     (if message (str message "\n" detail) detail)))
+     detail))
   (finish-element tag false)
   (println))
 
+(defn message-or-location
+  [message]
+  (if message
+    message
+    (let [[file line] (t/file-position 15)]
+      (str "In file " file " at line " line ":"))))
+
 (defn failure-el
   [message expected actual]
-  (message-el 'failure message (pr-str expected) (pr-str actual)))
+  (message-el 'failure
+              (message-or-location message)
+              (pr-str expected)
+              (pr-str actual)))
 
 (defn error-el
   [message expected actual]
   (message-el 'error
-              message
+              (message-or-location message)
               (pr-str expected)
               (if (instance? Throwable actual)
                 (with-out-str (stack/print-cause-trace actual t/*stack-trace-depth*))

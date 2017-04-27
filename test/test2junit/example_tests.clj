@@ -9,7 +9,7 @@
 (ns
  ^{:author "Ruediger Gad",
    :doc "Simple tests to illustrate failing, passing, and erroneous tests."} 
-  test2junit.tests
+  test2junit.example-tests
   (:require
     [clojure.test :refer :all]))
 

@@ -15,4 +15,5 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-assorted-utils "1.17.1"]]
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.3" :exclusions  [org.clojure/clojure]]]}}
+  :test2junit-run-ant true
 )

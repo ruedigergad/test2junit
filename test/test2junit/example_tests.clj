@@ -11,7 +11,8 @@
    :doc "Simple tests to illustrate failing, passing, and erroneous tests."} 
   test2junit.example-tests
   (:require
-    [clojure.test :refer :all]))
+    [clojure.test :refer :all]
+    [clj-assorted-utils.util :refer :all]))
 
 (deftest failing-test
   (let [foo 1]
@@ -27,4 +28,8 @@
   (let [foo 1]
     (is
       (= foo (/ 1 0)))))
+
+(deftest write-to-stderr-and-stdout
+  (println "Output to stdout.")
+  (println-err "Output to stderr."))
 

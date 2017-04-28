@@ -48,6 +48,14 @@
         (println "Testing:" ns#)
         (with-open [wrtr# (clojure.java.io/writer (str output-dir "/xml/" ns# ".xml"))]
           (binding [clojure.test/*test-out* wrtr#]
-            (test2junit.junit/with-junit-output
-              (apply f# args#))))))))
+            (let [eo-map (clj-assorted-utils.util/with-eo-str
+                           (test2junit.junit/with-junit-output
+                             (apply f# args#)))]
+              (binding [test2junit.junit/*depth* 1
+                        *out* wrtr#]
+                (test2junit.junit/simple-element 'system-err (:stderr eo-map))
+                (test2junit.junit/simple-element 'system-out (:stdout eo-map))
+                (test2junit.junit/finish-suite))
+              (print (:all eo-map))
+              (:ret eo-map))))))))
 

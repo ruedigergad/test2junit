@@ -116,6 +116,12 @@
   []
   (finish-element 'testcase true))
 
+(defn simple-element
+  [tag content]
+  (start-element tag true)
+  (element-content content)
+  (finish-element tag true))
+
 (defn suite-attrs
   [package classname]
   (let [attrs {:name (str package "." classname)
@@ -185,8 +191,7 @@
   (set! *depth* (dec *depth*))
   (t/with-test-out
     (start-suite (name (ns-name (:ns m))))
-    (print @testsuite-temp-string)
-    (finish-suite)))
+    (print @testsuite-temp-string)))
 
 (defmethod junit-report :begin-test-var [m]
   (dosync (ref-set result-temp-string ""))

@@ -198,7 +198,7 @@
   (t/with-test-out
     (binding [test2junit.junit/*depth* 1]
       (test2junit.junit/simple-element 'system-err (:stderr eo-map))
-      (test2junit.junit/simple-element 'system-out (:stdout eo-map))
+      (test2junit.junit/simple-element 'system-out (:all eo-map))
       (test2junit.junit/finish-suite))))
 
 (defmethod junit-report :begin-test-var [m]

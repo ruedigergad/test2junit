@@ -193,6 +193,14 @@
     (start-suite (name (ns-name (:ns m))))
     (print @testsuite-temp-string)))
 
+(defn close-suite
+  [eo-map]
+  (t/with-test-out
+    (binding [test2junit.junit/*depth* 1]
+      (test2junit.junit/simple-element 'system-err (:stderr eo-map))
+      (test2junit.junit/simple-element 'system-out (:stdout eo-map))
+      (test2junit.junit/finish-suite))))
+
 (defmethod junit-report :begin-test-var [m]
   (dosync (ref-set result-temp-string ""))
   (dosync (ref-set testcase-start-time (System/nanoTime))))

@@ -51,11 +51,7 @@
             (let [eo-map (clj-assorted-utils.util/with-eo-str
                            (test2junit.junit/with-junit-output
                              (apply f# args#)))]
-              (binding [test2junit.junit/*depth* 1
-                        *out* wrtr#]
-                (test2junit.junit/simple-element 'system-err (:stderr eo-map))
-                (test2junit.junit/simple-element 'system-out (:stdout eo-map))
-                (test2junit.junit/finish-suite))
+              (test2junit.junit/close-suite eo-map)
               (print (:all eo-map))
               (:ret eo-map))))))))
 

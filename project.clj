@@ -13,7 +13,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :eval-in-leiningen true
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [clj-assorted-utils "1.17.1"]]
+                 [clj-assorted-utils "1.18.0"]]
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.3" :exclusions  [org.clojure/clojure]]]}}
   :test2junit-run-ant true
   :test2junit-output-dir "ghpages/test-results"

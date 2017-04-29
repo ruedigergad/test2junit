@@ -193,13 +193,23 @@
     (start-suite (name (ns-name (:ns m))))
     (print @testsuite-temp-string)))
 
+(defn add-properties
+  []
+  (let [system-properties (merge {} (System/getProperties))]
+    (start-element 'properties true)
+    (doseq [[k v] system-properties]
+      (start-element 'property true {:name k :value v})
+      (finish-element 'property true))
+    (finish-element 'properties true)))
+
 (defn close-suite
   [eo-map]
   (t/with-test-out
     (binding [test2junit.junit/*depth* 1]
-      (test2junit.junit/simple-element 'system-err (:stderr eo-map))
-      (test2junit.junit/simple-element 'system-out (:all eo-map))
-      (test2junit.junit/finish-suite))))
+      (simple-element 'system-err (:stderr eo-map))
+      (simple-element 'system-out (:all eo-map))
+      (add-properties)
+      (finish-suite))))
 
 (defmethod junit-report :begin-test-var [m]
   (dosync (ref-set result-temp-string ""))

@@ -14,7 +14,8 @@
   :eval-in-leiningen true
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-assorted-utils "1.18.0"]]
-  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.3" :exclusions  [org.clojure/clojure]]]}}
+  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.3" :exclusions  [org.clojure/clojure]]]}
+              :test {:dependencies [[prismatic/schema "1.1.6"]]}}
   :test2junit-run-ant true
   :test2junit-output-dir "ghpages/test-results"
 )

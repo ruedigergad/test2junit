@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test2junit.example-tests" errors="1" failures="1" tests="4" time="0.0254" timestamp="2017-05-25_13:04:09+0200">
-    <testcase name="erroneous-test" classname="test2junit.example-tests" time="0.0168">
+<testsuite name="test2junit.example-tests" errors="1" failures="1" tests="4" time="0.0258" timestamp="2017-05-25_13:06:25+0200">
+    <testcase name="erroneous-test" classname="test2junit.example-tests" time="0.0169">
     <error message="In file example_tests.clj at line 29:">expected: (= foo (/ 1 0))
   actual: java.lang.ArithmeticException: Divide by zero
  at clojure.lang.Numbers.divide (Numbers.java:158)
@@ -133,9 +133,9 @@
     </testcase>
     <testcase name="write-to-stderr-and-stdout" classname="test2junit.example-tests" time="0.0011">
     </testcase>
-    <testcase name="passing-test" classname="test2junit.example-tests" time="0.0002">
+    <testcase name="passing-test" classname="test2junit.example-tests" time="0.0003">
     </testcase>
-    <testcase name="failing-test" classname="test2junit.example-tests" time="0.0033">
+    <testcase name="failing-test" classname="test2junit.example-tests" time="0.0032">
     <failure message="In file example_tests.clj at line 19:">expected: (= foo 0)
   actual: (not (= 1 0))
       at: example_tests.clj:19</failure>

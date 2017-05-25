@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="1" failures="1" id="0" name="example-tests" package="test2junit" tests="4" time="0.0254" timestamp="2017-05-25_13:04:09+0200">
-        <testcase classname="test2junit.example-tests" name="erroneous-test" time="0.0168">
+  <testsuite errors="1" failures="1" id="0" name="example-tests" package="test2junit" tests="4" time="0.0258" timestamp="2017-05-25_13:06:25+0200">
+        <testcase classname="test2junit.example-tests" name="erroneous-test" time="0.0169">
           <error message="In file example_tests.clj at line 29:">expected: (= foo (/ 1 0))
   actual: java.lang.ArithmeticException: Divide by zero
  at clojure.lang.Numbers.divide (Numbers.java:158)
@@ -137,10 +137,10 @@
         <testcase classname="test2junit.example-tests" name="write-to-stderr-and-stdout" time="0.0011">
     </testcase>
 
-        <testcase classname="test2junit.example-tests" name="passing-test" time="0.0002">
+        <testcase classname="test2junit.example-tests" name="passing-test" time="0.0003">
     </testcase>
 
-        <testcase classname="test2junit.example-tests" name="failing-test" time="0.0033">
+        <testcase classname="test2junit.example-tests" name="failing-test" time="0.0032">
           <failure message="In file example_tests.clj at line 19:">expected: (= foo 0)
   actual: (not (= 1 0))
       at: example_tests.clj:19</failure>
@@ -337,7 +337,7 @@ Output to stderr.
         </properties>
 
   </testsuite>
-  <testsuite errors="3" failures="0" id="1" name="schema-tests" package="test2junit" tests="9" time="0.0459" timestamp="2017-05-25_13:04:09+0200">
+  <testsuite errors="2" failures="0" id="1" name="schema-tests" package="test2junit" tests="3" time="0.0290" timestamp="2017-05-25_13:06:25+0200">
         <testcase classname="test2junit.schema-tests" name="schema-validate-num-fail" time="0.0089">
           <error message="Uncaught exception, not in assertion.">expected: nil
   actual: clojure.lang.ExceptionInfo: Value does not match schema: (not (instance? java.lang.Number &quot;1864&quot;))
@@ -472,171 +472,25 @@ Output to stderr.
 
         </testcase>
 
-        <testcase classname="test2junit.schema-tests" name="schema-validate-num-success" time="0.0003">
+        <testcase classname="test2junit.schema-tests" name="schema-validate-num-success" time="0.0002">
     </testcase>
 
-        <testcase classname="test2junit.schema-tests" name="schema-explain-failing-fn" time="0.0030">
-    </testcase>
-
-        <testcase classname="test2junit.schema-tests" name="schema-explain-record" time="0.0003">
-    </testcase>
-
-        <testcase classname="test2junit.schema-tests" name="schema-fn-validation-correct-fn" time="0.0084">
-    </testcase>
-
-        <testcase classname="test2junit.schema-tests" name="schema-explain-correct-fn" time="0.0002">
-    </testcase>
-
-        <testcase classname="test2junit.schema-tests" name="schema-validate-fail" time="0.0115">
-          <error message="Uncaught exception, not in assertion.">expected: nil
-  actual: clojure.lang.ExceptionInfo: Value does not match schema: {:a {:b (not (instance? java.lang.String 123)), :c (not (integer? &quot;ABC&quot;))}, :d missing-required-key}
- at schema.core$validator$fn__1714.invoke (core.clj:155)
-    schema.core$validate.invokeStatic (core.clj:164)
-    schema.core$validate.invoke (core.clj:159)
-    test2junit.schema_tests$fn__2781.invokeStatic (schema_tests.clj:47)
-    test2junit.schema_tests/fn (schema_tests.clj:46)
-    clojure.test$test_var$fn__7983.invoke (test.clj:716)
-    clojure.test$test_var.invokeStatic (test.clj:716)
-    clojure.test$test_var.invoke (test.clj:707)
-    clojure.test$test_vars$fn__8005$fn__8010.invoke (test.clj:734)
-    clojure.test$default_fixture.invokeStatic (test.clj:686)
-    clojure.test$default_fixture.invoke (test.clj:682)
-    clojure.test$test_vars$fn__8005.invoke (test.clj:734)
-    clojure.test$default_fixture.invokeStatic (test.clj:686)
-    clojure.test$default_fixture.invoke (test.clj:682)
-    clojure.test$test_vars.invokeStatic (test.clj:730)
-    clojure.test$test_all_vars.invokeStatic (test.clj:736)
-    clojure.test$test_ns.invokeStatic (test.clj:757)
-    clojure.test$test_ns.invoke (test.clj:742)
-    clojure.lang.AFn.applyToHelper (AFn.java:154)
-    clojure.lang.AFn.applyTo (AFn.java:144)
-    clojure.core$apply.invokeStatic (core.clj:646)
-    clojure.core$apply.invoke (core.clj:641)
-    test2junit.core$apply_junit_output_hook$fn__828$fn__837$fn__846$fn__847.invoke (core.clj:53)
-    test2junit.core$apply_junit_output_hook$fn__828$fn__837$fn__846.invoke (core.clj:52)
-    test2junit.core$apply_junit_output_hook$fn__828$fn__837.invoke (core.clj:51)
-    test2junit.core$apply_junit_output_hook$fn__828.doInvoke (core.clj:51)
-    clojure.lang.RestFn.applyTo (RestFn.java:139)
-    clojure.core$apply.invokeStatic (core.clj:648)
-    clojure.core$apply.invoke (core.clj:641)
-    robert.hooke$compose_hooks$fn__11994.doInvoke (hooke.clj:40)
-    clojure.lang.RestFn.applyTo (RestFn.java:137)
-    clojure.core$apply.invokeStatic (core.clj:646)
-    clojure.core$apply.invoke (core.clj:641)
-    robert.hooke$run_hooks.invokeStatic (hooke.clj:46)
-    robert.hooke$run_hooks.invoke (hooke.clj:45)
-    robert.hooke$prepare_for_hooks$fn__11999$fn__12000.doInvoke (hooke.clj:54)
-    clojure.lang.RestFn.applyTo (RestFn.java:137)
-    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
-    clojure.lang.RestFn.invoke (RestFn.java:408)
-    user$eval965$fn__1016.invoke (NO_SOURCE_FILE:0)
-    clojure.lang.AFn.applyToHelper (AFn.java:156)
-    clojure.lang.AFn.applyTo (AFn.java:144)
-    clojure.core$apply.invokeStatic (core.clj:648)
-    clojure.core$apply.invoke (core.clj:641)
-    leiningen.core.injected$compose_hooks$fn__899.doInvoke (NO_SOURCE_FILE:0)
-    clojure.lang.RestFn.applyTo (RestFn.java:137)
-    clojure.core$apply.invokeStatic (core.clj:646)
-    clojure.core$apply.invoke (core.clj:641)
-    leiningen.core.injected$run_hooks.invokeStatic (NO_SOURCE_FILE:0)
-    leiningen.core.injected$run_hooks.invoke (NO_SOURCE_FILE:0)
-    leiningen.core.injected$prepare_for_hooks$fn__904$fn__905.doInvoke (NO_SOURCE_FILE:0)
-    clojure.lang.RestFn.applyTo (RestFn.java:137)
-    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
-    clojure.lang.RestFn.invoke (RestFn.java:408)
-    clojure.core$map$fn__4785.invoke (core.clj:2646)
-    clojure.lang.LazySeq.sval (LazySeq.java:40)
-    clojure.lang.LazySeq.seq (LazySeq.java:49)
-    clojure.lang.Cons.next (Cons.java:39)
-    clojure.lang.RT.boundedLength (RT.java:1749)
-    clojure.lang.RestFn.applyTo (RestFn.java:130)
-    clojure.core$apply.invokeStatic (core.clj:648)
-    clojure.test$run_tests.invokeStatic (test.clj:767)
-    clojure.test$run_tests.doInvoke (test.clj:767)
-    clojure.lang.RestFn.applyTo (RestFn.java:137)
-    clojure.core$apply.invokeStatic (core.clj:646)
-    clojure.core$apply.invoke (core.clj:641)
-    user$eval965$fn__1028$fn__1059.invoke (NO_SOURCE_FILE:0)
-    user$eval965$fn__1028$fn__1029.invoke (NO_SOURCE_FILE:0)
-    user$eval965$fn__1028.invoke (NO_SOURCE_FILE:0)
-    user$eval965.invokeStatic (NO_SOURCE_FILE:0)
-    user$eval965.invoke (NO_SOURCE_FILE:-1)
-    clojure.lang.Compiler.eval (Compiler.java:6927)
-    clojure.lang.Compiler.eval (Compiler.java:6917)
-    clojure.lang.Compiler.eval (Compiler.java:6890)
-    clojure.core$eval.invokeStatic (core.clj:3105)
-    clojure.core$eval.invoke (core.clj:3101)
-    leiningen.core.eval$fn__5779.invokeStatic (eval.clj:342)
-    leiningen.core.eval/fn (eval.clj:332)
-    clojure.lang.MultiFn.invoke (MultiFn.java:233)
-    leiningen.core.eval$eval_in_project.invokeStatic (eval.clj:366)
-    leiningen.core.eval$eval_in_project.invoke (eval.clj:356)
-    leiningen.test$test.invokeStatic (test.clj:216)
-    leiningen.test$test.doInvoke (test.clj:182)
-    clojure.lang.RestFn.invoke (RestFn.java:410)
-    clojure.lang.AFn.applyToHelper (AFn.java:154)
-    clojure.lang.RestFn.applyTo (RestFn.java:132)
-    clojure.core$apply.invokeStatic (core.clj:648)
-    clojure.core$apply.invoke (core.clj:641)
-    leiningen.test2junit$test2junit$fn__875.invoke (test2junit.clj:55)
-    leiningen.test2junit$test2junit.invokeStatic (test2junit.clj:53)
-    leiningen.test2junit$test2junit.doInvoke (test2junit.clj:31)
-    clojure.lang.RestFn.invoke (RestFn.java:410)
-    clojure.lang.Var.invoke (Var.java:379)
-    clojure.lang.AFn.applyToHelper (AFn.java:154)
-    clojure.lang.Var.applyTo (Var.java:700)
-    clojure.core$apply.invokeStatic (core.clj:648)
-    clojure.core$apply.invoke (core.clj:641)
-    leiningen.core.main$partial_task$fn__5932.doInvoke (main.clj:272)
-    clojure.lang.RestFn.invoke (RestFn.java:410)
-    clojure.lang.AFn.applyToHelper (AFn.java:154)
-    clojure.lang.RestFn.applyTo (RestFn.java:132)
-    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
-    clojure.lang.RestFn.applyTo (RestFn.java:137)
-    clojure.core$apply.invokeStatic (core.clj:648)
-    clojure.core$apply.invoke (core.clj:641)
-    leiningen.core.main$apply_task.invokeStatic (main.clj:322)
-    leiningen.core.main$apply_task.invoke (main.clj:308)
-    leiningen.core.main$resolve_and_apply.invokeStatic (main.clj:328)
-    leiningen.core.main$resolve_and_apply.invoke (main.clj:324)
-    leiningen.core.main$_main$fn__5998.invoke (main.clj:401)
-    leiningen.core.main$_main.invokeStatic (main.clj:394)
-    leiningen.core.main$_main.doInvoke (main.clj:391)
-    clojure.lang.RestFn.invoke (RestFn.java:408)
-    clojure.lang.Var.invoke (Var.java:379)
-    clojure.lang.AFn.applyToHelper (AFn.java:154)
-    clojure.lang.Var.applyTo (Var.java:700)
-    clojure.core$apply.invokeStatic (core.clj:646)
-    clojure.main$main_opt.invokeStatic (main.clj:314)
-    clojure.main$main_opt.invoke (main.clj:310)
-    clojure.main$main.invokeStatic (main.clj:421)
-    clojure.main$main.doInvoke (main.clj:384)
-    clojure.lang.RestFn.invoke (RestFn.java:436)
-    clojure.lang.Var.invoke (Var.java:388)
-    clojure.lang.AFn.applyToHelper (AFn.java:160)
-    clojure.lang.Var.applyTo (Var.java:700)
-    clojure.main.main (main.java:37)
-
-      at: test.clj:716</error>
-
-        </testcase>
-
-        <testcase classname="test2junit.schema-tests" name="schema-fn-validation-failing-fn" time="0.0086">
+        <testcase classname="test2junit.schema-tests" name="schema-fn-validation-failing-fn" time="0.0185">
           <error message="Uncaught exception, not in assertion.">expected: nil
   actual: clojure.lang.ExceptionInfo: Output of stamped-names-failing does not match schema: 
 
-	 [0;33m  {:date (not (instance? java.lang.Long &quot;1495710249530&quot;))} [0m 
+	 [0;33m  {:date (not (instance? java.lang.Long &quot;1495710385052&quot;))} [0m 
 
 
- at test2junit.schema_tests$eval2859$stamped_names_failing__2864.invoke (schema_tests.clj:65)
-    test2junit.schema_tests$fn__2910$fn2911__2920$fn__2921.invoke (schema_tests.clj:84)
-    test2junit.schema_tests$fn__2910$fn2911__2920.invoke (schema_tests.clj:83)
+ at test2junit.schema_tests$eval2830$stamped_names_failing__2835.invoke (schema_tests.clj:34)
+    test2junit.schema_tests$fn__2848$fn2849__2858$fn__2859.invoke (schema_tests.clj:40)
+    test2junit.schema_tests$fn__2848$fn2849__2858.invoke (schema_tests.clj:39)
     clojure.lang.AFn.applyToHelper (AFn.java:152)
     clojure.lang.AFn.applyTo (AFn.java:144)
     clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
     clojure.lang.RestFn.invoke (RestFn.java:397)
-    test2junit.schema_tests$fn__2910.invokeStatic (schema_tests.clj:83)
-    test2junit.schema_tests/fn (schema_tests.clj:82)
+    test2junit.schema_tests$fn__2848.invokeStatic (schema_tests.clj:39)
+    test2junit.schema_tests/fn (schema_tests.clj:38)
     clojure.test$test_var$fn__7983.invoke (test.clj:716)
     clojure.test$test_var.invokeStatic (test.clj:716)
     clojure.test$test_var.invoke (test.clj:707)
@@ -762,9 +616,6 @@ Output to stderr.
       at: test.clj:716</error>
 
         </testcase>
-
-        <testcase classname="test2junit.schema-tests" name="schema-validate-success" time="0.0007">
-    </testcase>
 
         <system-err>
     </system-err>

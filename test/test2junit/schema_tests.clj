@@ -16,6 +16,12 @@
     [clj-assorted-utils.util :refer :all]
     [schema.core :as s]))
 
+(deftest schema-validate-num-success
+  (s/validate s/Num 1701))
+
+(deftest schema-validate-num-fail
+  (s/validate s/Num "1864"))
+
 ;;;
 ;;; The example schema data and validation snippets were taken from the README at:
 ;;; https://github.com/plumatic/schema#meet-schema
@@ -43,9 +49,37 @@
     {:a {:b 123
          :c "ABC"}}))
 
-(deftest schema-validate-num-success
-  (s/validate s/Num 1701))
+;;;
+;;; The example schema data and validation snippets are based on examples from the README at:
+;;; https://github.com/plumatic/schema#beyond-type-hints
+;;;
 
-(deftest schema-validate-num-fail
-  (s/validate s/Num "1864"))
+(s/defrecord StampedNames
+  [date :- Long
+   names :- [s/Str]])
+
+(s/defn stamped-names-correct :- StampedNames
+  [names :- [s/Str]]
+  (StampedNames. (System/currentTimeMillis) names))
+
+(s/defn stamped-names-failing :- StampedNames
+  [names :- [s/Str]]
+  (StampedNames. (str (System/currentTimeMillis)) names))
+
+(deftest schema-explain-record
+  (s/explain StampedNames))
+
+(deftest schema-explain-correct-fn
+  (s/explain (s/fn-schema stamped-names-correct)))
+
+(deftest schema-explain-failing-fn
+  (s/explain (s/fn-schema stamped-names-failing)))
+
+(deftest schema-fn-validation-correct-fn
+  (s/with-fn-validation
+    (stamped-names-correct ["bob"])))
+
+(deftest schema-fn-validation-failing-fn
+  (s/with-fn-validation
+    (stamped-names-failing ["bob"])))
 

@@ -52,6 +52,5 @@
                            (test2junit.junit/with-junit-output
                              (apply f# args#)))]
               (test2junit.junit/close-suite eo-map)
-              (print (:all eo-map))
               (:ret eo-map))))))))
 

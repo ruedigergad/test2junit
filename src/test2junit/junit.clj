@@ -48,7 +48,8 @@
   :author "Jason Sankey"}
   test2junit.junit
   (:require [clojure.stacktrace :as stack]
-            [clojure.test :as t])
+            [clojure.test :as t]
+            [clojure.java.io :as io])
   (:import (java.text SimpleDateFormat)
            (java.util Date)))
 
@@ -56,6 +57,8 @@
 (def testsuite-start-time (ref 0.0))
 (def testcase-start-time (ref 0.0))
 (def result-temp-string (ref ""))
+
+(def out-wrtr (io/writer System/out))
 
 ;; copied from clojure.contrib.lazy-xml
 (def ^{:private true}
@@ -184,11 +187,15 @@
 (defmulti ^:dynamic junit-report :type)
 
 (defmethod junit-report :begin-test-ns [m]
+  (binding [*out* out-wrtr]
+    (println "Running tests in:" (ns-name (:ns m))))
   (set! *depth* (inc *depth*))
   (dosync (ref-set testsuite-temp-string ""))
   (dosync (ref-set testsuite-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-ns [m]
+  (binding [*out* out-wrtr]
+    (println "Finished tests in:" (ns-name (:ns m))))
   (set! *depth* (dec *depth*))
   (t/with-test-out
     (start-suite (name (ns-name (:ns m))))
@@ -213,10 +220,14 @@
       (finish-suite))))
 
 (defmethod junit-report :begin-test-var [m]
+  (binding [*out* out-wrtr]
+    (println "  Running test:" (:var m)))
   (dosync (ref-set result-temp-string ""))
   (dosync (ref-set testcase-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-var [m]
+  (binding [*out* out-wrtr]
+    (println "  Finished test:" (:var m)))
   (dosync (alter testsuite-temp-string str
     (with-out-str
       (let [var (:var m)]
@@ -226,10 +237,16 @@
       (finish-case)))))
 
 (defmethod junit-report :pass [m]
+  (binding [*out* out-wrtr]
+    (println "    PASS"))
   (t/inc-report-counter :pass))
 
 (defmethod junit-report :fail [m]
   (do
+    (binding [*out* out-wrtr]
+      (println "    FAIL")
+      (println "      Expected:" (:expected m))
+      (println "      Actual:" (:actual m)))
     (t/inc-report-counter :fail)
     (dosync (alter result-temp-string str
       (with-out-str
@@ -239,6 +256,14 @@
 
 (defmethod junit-report :error [m]
   (do
+    (binding [*out* out-wrtr]
+      (println "    ERROR")
+      (let [ex (:actual m)]
+        (println "      Message:" (.getMessage ex))
+        (println "      Cause:" (.getCause  ex))
+        (println "      Trace:")
+        (doseq [trace-line (.getStackTrace ex)]
+          (println "       " trace-line))))
     (t/inc-report-counter :error)
     (dosync (alter result-temp-string str
       (with-out-str

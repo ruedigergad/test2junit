@@ -61,8 +61,9 @@
 (def ^{:private true}
      escape-xml-map
      (zipmap "'<>\"&" (map #(str \& % \;) '[apos lt gt quot amp])))
+
 (defn- escape-xml [text]
-  (apply str (map #(escape-xml-map % %) text)))
+  (.replaceAll (apply str (map #(escape-xml-map % %) text)) "[\\p{C}&&[^\\s]]" ""))
 
 (def ^:dynamic *var-context*)
 (def ^:dynamic *depth*)

@@ -238,13 +238,13 @@
 
 (defmethod junit-report :pass [m]
   (binding [*out* out-wrtr]
-    (println "    PASS"))
+    (println "    \033[42mPASS\033[m"))
   (t/inc-report-counter :pass))
 
 (defmethod junit-report :fail [m]
   (do
     (binding [*out* out-wrtr]
-      (println "    FAIL")
+      (println "    \033[43mFAIL\033[m")
       (println "      Expected:" (:expected m))
       (println "      Actual:" (:actual m)))
     (t/inc-report-counter :fail)
@@ -257,7 +257,7 @@
 (defmethod junit-report :error [m]
   (do
     (binding [*out* out-wrtr]
-      (println "    ERROR")
+      (println "    \033[41mERROR\033[m")
       (let [ex (:actual m)]
         (println "      Message:" (.getMessage ex))
         (println "      Cause:" (.getCause  ex))

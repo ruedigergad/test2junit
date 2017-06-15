@@ -42,6 +42,24 @@ This will enable you to use the plugin from your terminal:
 
 ## License
 
-Copyright © 2013-2017 Ruediger Gad, et al. (See src/test2junit/junit.clj).
+Copyright © 2013-2017 Ruediger Gad, et al. (See below.)
+
+
+
+Contributors:
+
+Kristoffer Roupé https://github.com/kitofr
+
+Dante Briones https://github.com/dbriones
+
+Matthias Nehlsen https://github.com/matthiasn
+
+Sebastián Moreno https://github.com/kernelp4nic
+
+Eric Caspary https://github.com/err
+
+
+
+See also src/test2junit/junit.clj for authors of the code on which test2junit is based.
 
 Distributed under the Eclipse Public License, the same as Clojure.

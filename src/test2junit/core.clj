@@ -31,27 +31,27 @@
     (:test2junit-output-dir project)
     "test2junit"))
 
-(defn apply-junit-output-hook [project]
-  (let [output-dir (get-output-dir project)]
-    (println "Writing output to:" output-dir)
-    (when (not (clj-assorted-utils.util/file-exists? "build.xml"))
-      (println "Creating default build.xml file.")
-      (spit "build.xml" (strng/replace default-ant-build-file-content "test2junit-dir" output-dir)))
-    (println "")
-    (robert.hooke/add-hook 
-      #'clojure.test/test-ns
-      (fn [f# & args#]
-        (clj-assorted-utils.util/mkdir output-dir)
-        (clj-assorted-utils.util/mkdir (str output-dir "/html"))
-        (clj-assorted-utils.util/mkdir (str output-dir "/tmp"))
-        (clj-assorted-utils.util/mkdir (str output-dir "/xml"))
-        (let [ns# (first args#)]
-          (println "Testing:" ns#)
-          (with-open [wrtr# (clojure.java.io/writer (str output-dir "/xml/" ns# ".xml"))]
-            (binding [clojure.test/*test-out* wrtr#]
-              (let [eo-map (clj-assorted-utils.util/with-eo-str
-                             (test2junit.junit/with-junit-output
-                               (apply f# args#)))]
-                (test2junit.junit/close-suite eo-map)
-                (:ret eo-map)))))))))
+(defn apply-junit-output-hook [output-dir silent]
+  (println "Writing output to:" output-dir)
+  (when (not (clj-assorted-utils.util/file-exists? "build.xml"))
+    (println "Creating default build.xml file.")
+    (spit "build.xml" (strng/replace default-ant-build-file-content "test2junit-dir" output-dir)))
+  (println "")
+  (robert.hooke/add-hook 
+    #'clojure.test/test-ns
+    (fn [f# & args#]
+      (clj-assorted-utils.util/mkdir output-dir)
+      (clj-assorted-utils.util/mkdir (str output-dir "/html"))
+      (clj-assorted-utils.util/mkdir (str output-dir "/tmp"))
+      (clj-assorted-utils.util/mkdir (str output-dir "/xml"))
+      (let [ns# (first args#)]
+        (println "Testing:" ns#)
+        (with-open [wrtr# (clojure.java.io/writer (str output-dir "/xml/" ns# ".xml"))]
+          (binding [clojure.test/*test-out* wrtr#
+                    test2junit.junit/*silent* silent]
+            (let [eo-map (clj-assorted-utils.util/with-eo-str
+                           (test2junit.junit/with-junit-output
+                             (apply f# args#)))]
+              (test2junit.junit/close-suite eo-map)
+              (:ret eo-map))))))))
 

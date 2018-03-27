@@ -70,6 +70,7 @@
 
 (def ^:dynamic *var-context*)
 (def ^:dynamic *depth*)
+(def ^:dynamic *silent* false)
 
 (defn indent
   []
@@ -187,15 +188,17 @@
 (defmulti ^:dynamic junit-report :type)
 
 (defmethod junit-report :begin-test-ns [m]
-  (binding [*out* out-wrtr]
-    (println "Running tests in:" (ns-name (:ns m))))
+  (when-not *silent*
+    (binding [*out* out-wrtr]
+      (println "Running tests in:" (ns-name (:ns m)))))
   (set! *depth* (inc *depth*))
   (dosync (ref-set testsuite-temp-string ""))
   (dosync (ref-set testsuite-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-ns [m]
-  (binding [*out* out-wrtr]
-    (println "Finished tests in:" (ns-name (:ns m))))
+  (when-not *silent*
+    (binding [*out* out-wrtr]
+      (println "Finished tests in:" (ns-name (:ns m)))))
   (set! *depth* (dec *depth*))
   (t/with-test-out
     (start-suite (name (ns-name (:ns m))))
@@ -220,14 +223,16 @@
       (finish-suite))))
 
 (defmethod junit-report :begin-test-var [m]
-  (binding [*out* out-wrtr]
-    (println "  Running test:" (:var m)))
+  (when-not *silent*
+    (binding [*out* out-wrtr]
+      (println "  Running test:" (:var m))))
   (dosync (ref-set result-temp-string ""))
   (dosync (ref-set testcase-start-time (System/nanoTime))))
 
 (defmethod junit-report :end-test-var [m]
-  (binding [*out* out-wrtr]
-    (println "  Finished test:" (:var m)))
+  (when-not *silent*
+    (binding [*out* out-wrtr]
+      (println "  Finished test:" (:var m))))
   (dosync (alter testsuite-temp-string str
     (with-out-str
       (let [var (:var m)]
@@ -237,25 +242,26 @@
       (finish-case)))))
 
 (defmethod junit-report :pass [m]
-  (binding [*out* out-wrtr]
-    (println "    \033[42mPASS\033[m"))
+  (when-not *silent*
+    (binding [*out* out-wrtr]
+      (println "    \033[42mPASS\033[m")))
   (t/inc-report-counter :pass))
 
 (defmethod junit-report :fail [m]
-  (do
+  (when-not *silent*
     (binding [*out* out-wrtr]
       (println "    \033[43mFAIL\033[m")
       (println "      Expected:" (:expected m))
-      (println "      Actual:" (:actual m)))
-    (t/inc-report-counter :fail)
-    (dosync (alter result-temp-string str
-      (with-out-str
-        (failure-el (:message m)
-                    (:expected m)
-                    (:actual m)))))))
+      (println "      Actual:" (:actual m))))
+  (t/inc-report-counter :fail)
+  (dosync (alter result-temp-string str
+    (with-out-str
+      (failure-el (:message m)
+                  (:expected m)
+                  (:actual m))))))
 
 (defmethod junit-report :error [m]
-  (do
+  (when-not *silent*
     (binding [*out* out-wrtr]
       (println "    \033[41mERROR\033[m")
       (let [ex (:actual m)]
@@ -263,13 +269,13 @@
         (println "      Cause:" (.getCause  ex))
         (println "      Trace:")
         (doseq [trace-line (.getStackTrace ex)]
-          (println "       " trace-line))))
-    (t/inc-report-counter :error)
-    (dosync (alter result-temp-string str
-      (with-out-str
-        (error-el (:message m)
-                  (:expected m)
-                  (:actual m)))))))
+          (println "       " trace-line)))))
+  (t/inc-report-counter :error)
+  (dosync (alter result-temp-string str
+    (with-out-str
+      (error-el (:message m)
+                (:expected m)
+                (:actual m))))))
 
 (defmethod junit-report :default [_])
 

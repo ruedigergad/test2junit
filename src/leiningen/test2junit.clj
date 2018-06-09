@@ -44,7 +44,10 @@
                          add-test-var-println)
   (let [output-dir (test2junit.core/get-output-dir project)
         silent (:test2junit-silent project)
-        test2junit-version ((first (filter #(= (first %) 'test2junit/test2junit) (:plugins project))) 1)
+        leiningen-test2junit-info (first (filter #(= (first %) 'test2junit/test2junit) (:plugins project)))
+        test2junit-version (if (not (nil? leiningen-test2junit-info))
+                             (leiningen-test2junit-info 1)
+                             "n/a")
         _ (println "Using test2junit version:" test2junit-version)
         test2junit-profile [{:injections `[(require 'test2junit.core)
                                            (test2junit.core/apply-junit-output-hook ~output-dir ~silent)]

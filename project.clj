@@ -6,6 +6,8 @@
 ;;;   http://opensource.org/licenses/eclipse-1.0.php
 ;;;
 
+; Remember to update the version info in src/leiningen/test2junit.clj as well.
+; (Or find a way to automatically do this on compilation/deployment.)
 (defproject test2junit "1.4.2"
   :description "Leiningen plug-in for emitting test output in JUnit XML format"
   :url "https://github.com/ruedigergad/test2junit"

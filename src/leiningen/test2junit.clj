@@ -44,12 +44,12 @@
                          add-test-var-println)
   (let [output-dir (test2junit.core/get-output-dir project)
         silent (:test2junit-silent project)
-        test2junit-version "1.4.2"
+        test2junit-version "1.4.4"
         _ (println "Using test2junit version:" test2junit-version)
         test2junit-profile [{:injections `[(require 'test2junit.core)
                                            (test2junit.core/apply-junit-output-hook ~output-dir ~silent)]
                              :dependencies [['robert/hooke "1.3.0"]
-                                            ['clj-assorted-utils "1.18.2"]
+                                            ['clj-assorted-utils "1.19.0"]
                                             ['test2junit test2junit-version]]}]]
     (binding [leiningen.core.main/*exit-process?* false]
       (try
